@@ -1,1 +1,13 @@
 # bot
+
+sites sobre criação de bot em python
+
+https://tutorials.botsfloor.com/creating-a-bot-using-the-telegram-bot-api-5d3caed3266d
+
+https://python-telegram-bot.org/
+
+https://github.com/python-telegram-bot/python-telegram-bot
+
+https://medium.com/@ngrjs/creating-a-telegram-bot-using-python-9d11a43a8d2
+
+http://blog.ongair.im/how-to-create-a-telegram-bot/

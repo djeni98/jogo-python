@@ -11,3 +11,7 @@ https://github.com/python-telegram-bot/python-telegram-bot
 https://medium.com/@ngrjs/creating-a-telegram-bot-using-python-9d11a43a8d2
 
 http://blog.ongair.im/how-to-create-a-telegram-bot/
+
+https://github.com/jh0ker/mau_mau_bot
+
+https://pixabay.com/pt/baralho-de-cartas-conv%C3%A9s-cart%C3%B5es-161536/

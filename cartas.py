@@ -26,33 +26,39 @@ DAMA = 'Q'
 VALETE = 'J'
 REI = 'K'
 
-VALORES = (AS, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, DAMA, VALETE, REI)
+VALORES = (QUATRO, CINCO, SEIS, SETE, DAMA, VALETE, REI, AS, DOIS, TRES)
+PESO_COMUM = { valor: peso for peso, valor in enumerate(VALORES) }
+PESO_MANILHA = { SALMORA: 11, ESPADAS: 12, COPAS: 13, PAUS: 14 }
 
 # Colocar os stickers
 # STICKERS = { p_A: ____, p_2: ____ ..., s_K: ____ }
 
 # Definir TRUE e FALSE para a manilha
-TRUE = t
-FALSE = f
+# TRUE = t
+# FALSE = f
 
 class Carta(object):
     """Representa uma carta do baralho"""
 
-    def __init__(self, valor, naipe, manilha=FALSE):
+    # Manilha selecionada pelo 'Jogo'
+    def __init__(self, valor, naipe, manilha):
         self.valor = valor
         self.naipe = naipe
-        self.manilha = manilha
+        self.peso = PESO_MANILHA[naipe] if valor == manilha else PESO_COMUM[valor]
 
-    def __str__(self):
-        return '%s_%s_%s' % (self.valor, self.naipe, self.manilha)
+    def __eq__(self, x):
+        return self.peso == x.peso
 
-    def __repr__(self):
-        return '%s%s' % (self.valor, ICONE_NAIPES[self.naipe])
+    def __lt__(self, x):
+        return self.peso < x.peso
 
-def from_str(string):
-    """Transforma string em Carta"""
-    valor, naipe, manilha = string.split('_')
-    return Carta(valor, naipe, manilha)
+# ----- Pra que esta função? ----- #
+# Manilha selecionada pelo 'Jogo'
+#def from_str(string, manilha):
+#    """Transforma string em Carta"""
+#    valor, naipe = string.split('_')
+#    return Carta(valor, naipe, manilha)
+# -------------------------------- #
 
 class Baralho(object):
     """Representa o baralho do jogo"""
@@ -64,11 +70,15 @@ class Baralho(object):
         """Embaralha"""
         shuffle(self.cartas)
 
-    def novo_baralho(self):
+    # Manilha selecionada pelo 'Jogo'
+    def novo_baralho(self, vira_v, vira_n):
         self.cartas.clear()
+        manilha_v = QUATRO if vira_v == TRES else VALORES[VALORES.index(vira_v)+1] 
         for valor in VALORES:
             for naipe in NAIPES:
-                self.cartas.append(Carta(valor, naipe))
+                if(valor == vira_v and naipe == vira_n):
+                    continue
+                self.cartas.append(Carta(valor, naipe, manilha_v))
         self.embaralha()
 
 

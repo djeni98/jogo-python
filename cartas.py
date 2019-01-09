@@ -7,12 +7,11 @@ SALMORA = 's' # Também conhecido como Mole
 
 NAIPES = (PAUS, COPAS, ESPADAS, SALMORA)
 
-# Colocar os emojis para representar os naipes
 ICONE_NAIPES = {
-    PAUS: '♧',
-    COPAS: '♡',
-    ESPADAS: '♤',
-    SALMORA: '♢'
+    PAUS:    '♣',
+    COPAS:   '♥',
+    ESPADAS: '♠',
+    SALMORA: '♦'
 }
 
 AS = 'A'
@@ -33,10 +32,6 @@ PESO_MANILHA = { SALMORA: 11, ESPADAS: 12, COPAS: 13, PAUS: 14 }
 # Colocar os stickers
 # STICKERS = { p_A: ____, p_2: ____ ..., s_K: ____ }
 
-# Definir TRUE e FALSE para a manilha
-# TRUE = t
-# FALSE = f
-
 class Carta(object):
     """Representa uma carta do baralho"""
 
@@ -52,13 +47,8 @@ class Carta(object):
     def __lt__(self, x):
         return self.peso < x.peso
 
-# ----- Pra que esta função? ----- #
-# Manilha selecionada pelo 'Jogo'
-#def from_str(string, manilha):
-#    """Transforma string em Carta"""
-#    valor, naipe = string.split('_')
-#    return Carta(valor, naipe, manilha)
-# -------------------------------- #
+    def __str__(self):
+        return "{0}{1}".format(self.valor, ICONE_NAIPES[self.naipe])
 
 class Baralho(object):
     """Representa o baralho do jogo"""
@@ -81,4 +71,12 @@ class Baralho(object):
                 self.cartas.append(Carta(valor, naipe, manilha_v))
         self.embaralha()
 
+    def pega_cartas(self, qtde):
+        mao = list()
+        if self.cartas:
+            for i in range(qtde):
+                mao.append(self.cartas.pop())
+        else:
+            print("Falha em pegar cartas do baralho")
+        return mao
 

@@ -55,6 +55,7 @@ class Baralho(object):
 
     def __init__(self):
         self.cartas = list()
+        self.vira = None
 
     def embaralha(self):
         """Embaralha"""
@@ -67,16 +68,18 @@ class Baralho(object):
         for valor in VALORES:
             for naipe in NAIPES:
                 if(valor == vira_v and naipe == vira_n):
-                    continue
-                self.cartas.append(Carta(valor, naipe, manilha_v))
+                    self.vira = Carta(valor, naipe, manilha_v)
+                else:
+                    self.cartas.append(Carta(valor, naipe, manilha_v))
         self.embaralha()
 
     def pega_cartas(self, qtde):
         mao = list()
-        if self.cartas:
-            for i in range(qtde):
+        for i in range(qtde):
+            if self.cartas:
                 mao.append(self.cartas.pop())
-        else:
-            print("Falha em pegar cartas do baralho")
+            elif self.vira:
+                mao.append(self.vira)
+                # self.vira = None
         return mao
 

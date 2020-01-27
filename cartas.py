@@ -50,12 +50,18 @@ class Carta(object):
     def __str__(self):
         return "{0}{1}".format(self.valor, ICONE_NAIPES[self.naipe])
 
+    def __repr__(self):
+        return "<Carta {0}{1}>".format(self.valor, ICONE_NAIPES[self.naipe])
+
 class Baralho(object):
     """Representa o baralho do jogo"""
 
     def __init__(self):
         self.cartas = list()
         self.vira = None
+
+    def __repr__(self):
+        return '<Baralho #cartas={}, vira={}>'.format(len(self.cartas), self.vira)
 
     def embaralha(self):
         """Embaralha"""

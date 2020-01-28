@@ -26,6 +26,23 @@ def getAposta(jogador, rodadas = None):
 
     return ap
 
+def jogaCarta(jogador):
+    print(' --- Jogador {} ---'.format(jogador.nome))
+    jogador.imprime_cartas()
+    print('Digite o número que representa a carta para jogá-la')
+    carta = None
+    while carta == None:
+        try:
+            carta = int(input())
+            if carta < 0 or carta >= len(jogador.cartas):
+                carta = None
+                print('Digite o número que representa a carta para jogá-la')
+        except ValueError:
+            carta = None
+            print('Digite o número que representa a carta para jogá-la')
+
+    return jogador.joga_carta(carta)
+
 class Jogo(object):
     def __init__(self):
         self.baralho = Baralho()
@@ -58,7 +75,20 @@ class Jogo(object):
             return None
 
     def nova_rodada(self, jogadores):
-        return choice(jogadores).nome
+        maior_valor = jogaCarta(jogadores[0])
+        ganhador = jogadores[0]
+        print('{} jogou {}'.format(jogadores[0].nome, str(maior_valor)))
+
+        for jogador in jogadores[1:]:
+            carta = jogaCarta(jogador)
+            print('{} jogou {}'.format(jogador.nome, str(carta)))
+            if maior_valor < carta:
+                print(' + {} de {} é maior que anterior {} de {}'.format(carta, jogador, maior_valor, ganhador))
+                maior_valor = carta
+                ganhador = jogador
+
+        return ganhador.nome
+        # return choice(jogadores).nome
 
     def nova_partida(self):
         vira_valor = choice(VALORES)
@@ -88,6 +118,7 @@ class Jogo(object):
         jogo = { jogador.nome: 0 for jogador in self.jogadores }
 
         for vida in range(rodadas):
+            # rotaciona pelo jogador ganhador da rodada passada
             jogadores_ativos = list()
             for jogador in self.jogadores:
                 if jogador.vidas > vida:

@@ -15,6 +15,9 @@ class Jogador(object):
     def pega_mao(self, baralho):
         self.cartas = baralho.pega_cartas(self.vidas)
 
+    def joga_carta(self, indice):
+        return self.cartas.pop(indice)
+
     def imprime_mao(self):
         mao = ""
         for carta in self.cartas:
@@ -22,3 +25,13 @@ class Jogador(object):
         texto = "As cartas de {0} são {1}".format(self.nome, mao)
         print(texto)
         return texto
+
+    def imprime_cartas(self):
+        mao = " > "
+        indices = " > "
+        for i, carta in enumerate(self.cartas):
+            mao += str(carta) + " "
+            indices += " " + str(i) + " "
+
+        print(mao)
+        print(indices)

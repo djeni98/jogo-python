@@ -27,7 +27,7 @@ REI = 'K'
 
 VALORES = (QUATRO, CINCO, SEIS, SETE, DAMA, VALETE, REI, AS, DOIS, TRES)
 PESO_COMUM = { valor: peso for peso, valor in enumerate(VALORES) }
-PESO_MANILHA = { SALMORA: 11, ESPADAS: 12, COPAS: 13, PAUS: 14 }
+PESO_MANILHA = { SALMORA: 2, ESPADAS: 3, COPAS: 4, PAUS: 5 }
 
 # Colocar os stickers
 # STICKERS = { p_A: ____, p_2: ____ ..., s_K: ____ }
@@ -39,7 +39,10 @@ class Carta(object):
     def __init__(self, valor, naipe, manilha):
         self.valor = valor
         self.naipe = naipe
-        self.peso = PESO_MANILHA[naipe] if valor == manilha else PESO_COMUM[valor]
+        if valor == manilha:
+            self.peso = PESO_MANILHA[naipe] * 100
+        else:
+            self.peso = PESO_COMUM[valor]*5 + PESO_MANILHA[naipe]
 
     def __eq__(self, x):
         return self.peso == x.peso

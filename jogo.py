@@ -2,10 +2,14 @@ from cartas import Baralho, VALORES, NAIPES
 from random import choice
 # seleciona item da tupla
 
-def getAposta(jogador):
+def getAposta(jogador, rodadas = None):
     print(' --- Jogador {} ---'.format(jogador.nome))
     jogador.imprime_mao()
     print('Quantas faz {}?'.format(jogador.nome))
+
+    if rodadas:
+        print('Não pode ser igual a {}'.format(rodadas))
+
     ap = None
     while ap == None:
         try:
@@ -13,6 +17,9 @@ def getAposta(jogador):
             if ap < 0:
                 ap = None
                 print('Digite um número inteiro não negativo')
+            elif rodadas == ap:
+                ap = None
+                print('A sua aposta deve ser diferente de {}'.format(rodadas))
         except ValueError:
             ap = None
             print('Digite um número inteiro não negativo')
@@ -66,8 +73,17 @@ class Jogo(object):
 
         # quantas faz
         print(self.baralho)
-        aposta = { jogador.nome: getAposta(jogador) for jogador in self.jogadores}
-        # Implementar soma das apostas != rodadas
+
+
+        aposta = { jogador.nome: getAposta(jogador) for jogador in self.jogadores[:-1] }
+        total = 0
+        for nome, ap in aposta.items():
+            total += ap
+
+        if total > rodadas:
+            aposta[self.jogadores[-1].nome] = getAposta(self.jogadores[-1])
+        else:
+            aposta[self.jogadores[-1].nome] = getAposta(self.jogadores[-1], rodadas - total)
 
         jogo = { jogador.nome: 0 for jogador in self.jogadores }
 
